@@ -5,10 +5,12 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
+from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import Node
+from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 
 
@@ -18,6 +20,9 @@ def generate_launch_description():
 
     world = LaunchConfiguration('world')
     robot_urdf = LaunchConfiguration('robot_urdf')
+    foxglove = LaunchConfiguration('foxglove')
+    foxglove_address = LaunchConfiguration('foxglove_address')
+    foxglove_port = LaunchConfiguration('foxglove_port')
 
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -37,6 +42,18 @@ def generate_launch_description():
             '/tof_sim/tof/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked',
         ],
         output='screen',
+    )
+
+    foxglove_bridge = Node(
+        package='foxglove_bridge',
+        executable='foxglove_bridge',
+        name='foxglove_bridge',
+        parameters=[{
+            'address': ParameterValue(foxglove_address, value_type=str),
+            'port': ParameterValue(foxglove_port, value_type=int),
+        }],
+        output='screen',
+        condition=IfCondition(foxglove),
     )
 
     spawn_robot = Node(
@@ -67,7 +84,24 @@ def generate_launch_description():
             ]),
             description='URDF file to spawn into the world.',
         ),
+
+        DeclareLaunchArgument(
+            'foxglove',
+            default_value='true',
+            description='Start foxglove_bridge.',
+        ),
+        DeclareLaunchArgument(
+            'foxglove_address',
+            default_value='0.0.0.0',
+            description='Bind address used by foxglove_bridge.',
+        ),
+        DeclareLaunchArgument(
+            'foxglove_port',
+            default_value='8765',
+            description='WebSocket port used by foxglove_bridge.',
+        ),
         gazebo,
         bridge,
+        foxglove_bridge,
         spawn_robot,
     ])
