@@ -8,6 +8,14 @@
     <color rgba="0.10 0.70 0.42 1.0"/>
   </material>
 
+  <link name="base_footprint"/>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
   <link name="base_link">
     <inertial>
       <origin xyz="0 0 0.06" rpy="0 0 0"/>
@@ -82,7 +90,7 @@
 
     <sensor name="tof_array" type="gpu_lidar">
       <pose>0 0 0 0 0 0</pose>
-      <topic>/tof_sim/tof</topic>
+      <topic>/tof_sim/raw_tof</topic>
       <always_on>true</always_on>
       <visualize>true</visualize>
       <update_rate>15</update_rate>
