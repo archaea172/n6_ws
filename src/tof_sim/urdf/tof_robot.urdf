@@ -80,13 +80,14 @@
   <gazebo reference="tof_sensor_link">
     <material>Gazebo/Green</material>
 
-    <sensor name="tof_array" type="gpu_ray">
+    <sensor name="tof_array" type="gpu_lidar">
       <pose>0 0 0 0 0 0</pose>
+      <topic>/tof_sim/tof</topic>
       <always_on>true</always_on>
       <visualize>true</visualize>
       <update_rate>15</update_rate>
 
-      <ray>
+      <lidar>
         <scan>
           <horizontal>
             <samples>8</samples>
@@ -113,16 +114,8 @@
           <mean>0.0</mean>
           <stddev>0.01</stddev>
         </noise>
-      </ray>
+      </lidar>
 
-      <plugin name="tof_array_ros" filename="libgazebo_ros_ray_sensor.so">
-        <ros>
-          <namespace>/tof_sim</namespace>
-          <remapping>~/out:=tof/points</remapping>
-        </ros>
-        <output_type>sensor_msgs/PointCloud2</output_type>
-        <frame_name>tof_sensor_link</frame_name>
-      </plugin>
     </sensor>
   </gazebo>
 </robot>
