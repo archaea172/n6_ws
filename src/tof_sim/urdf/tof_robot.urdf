@@ -85,6 +85,27 @@
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
+  <gazebo>
+    <plugin
+      filename="ignition-gazebo-velocity-control-system"
+      name="ignition::gazebo::systems::VelocityControl">
+      <topic>/cmd_vel</topic>
+      <link_name>base_footprint</link_name>
+    </plugin>
+
+    <plugin
+      filename="ignition-gazebo-odometry-publisher-system"
+      name="ignition::gazebo::systems::OdometryPublisher">
+      <odom_frame>odom</odom_frame>
+      <robot_base_frame>base_footprint</robot_base_frame>
+      <child_frame_id>base_footprint</child_frame_id>
+      <dimensions>2</dimensions>
+      <odom_publish_frequency>30</odom_publish_frequency>
+      <odom_topic>/odom</odom_topic>
+      <tf_topic>/tf</tf_topic>
+    </plugin>
+  </gazebo>
+
   <gazebo reference="tof_sensor_link">
     <material>Gazebo/Green</material>
 
@@ -123,7 +144,6 @@
           <stddev>0.01</stddev>
         </noise>
       </lidar>
-
     </sensor>
   </gazebo>
 </robot>

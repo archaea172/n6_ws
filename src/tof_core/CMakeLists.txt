@@ -17,10 +17,7 @@ install(
 )
 
 install(
-  PROGRAMS
-    scripts/tof_cmd_vel_motion.py
-    scripts/tof_frame_republisher.py
-    scripts/tof_motion_3d.py
+  PROGRAMS scripts/tof_frame_republisher.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
