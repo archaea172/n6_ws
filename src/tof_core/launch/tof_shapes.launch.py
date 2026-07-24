@@ -3,6 +3,7 @@ import os
 from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
+from launch.actions import AppendEnvironmentVariable
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.actions import TimerAction
@@ -16,11 +17,11 @@ from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 
 
-SET_POSE_SERVICE = '/world/tof_shapes/set_pose'
+SET_POSE_SERVICE = '/world/irc_table/set_pose'
 
 
 def generate_launch_description():
-    pkg_tof_core = get_package_share_directory('tof_core')
+    pkg_irc_table = get_package_share_directory('irc_table')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
     world = LaunchConfiguration('world')
@@ -39,6 +40,16 @@ def generate_launch_description():
     initial_yaw = LaunchConfiguration('initial_yaw')
     odom_frame = LaunchConfiguration('odom_frame')
     base_frame = LaunchConfiguration('base_frame')
+
+
+    gazebo_resource_path = AppendEnvironmentVariable(
+        'GZ_SIM_RESOURCE_PATH',
+        os.path.join(pkg_irc_table, 'models'),
+    )
+    ignition_resource_path = AppendEnvironmentVariable(
+        'IGN_GAZEBO_RESOURCE_PATH',
+        os.path.join(pkg_irc_table, 'models'),
+    )
 
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -103,6 +114,7 @@ def generate_launch_description():
         parameters=[{
             'address': ParameterValue(foxglove_address, value_type=str),
             'port': ParameterValue(foxglove_port, value_type=int),
+            'use_sim_time': True,
         }],
         output='screen',
         condition=IfCondition(foxglove),
@@ -151,7 +163,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
             'world',
-            default_value=os.path.join(pkg_tof_core, 'worlds', 'tof_shapes.sdf'),
+            default_value=os.path.join(pkg_irc_table, 'worlds', 'irc_table.sdf'),
             description='Gazebo Sim world file.',
         ),
         DeclareLaunchArgument(
@@ -233,6 +245,8 @@ def generate_launch_description():
             default_value='base_footprint',
             description='Robot base frame driven by cmd_vel.',
         ),
+        gazebo_resource_path,
+        ignition_resource_path,
         gazebo,
         bridge,
         robot_state_publisher,
