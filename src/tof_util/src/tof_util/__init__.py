@@ -1,2 +1,1 @@
-def hello() -> str:
-    return "Hello from tof-util!"
+from .cmd_vel_publisher import main_cmd_vel_publisher
