@@ -1,1 +1,2 @@
 from .cmd_vel_publisher import main_cmd_vel_publisher
+from .cmd_vel_bag_runner import main_cmd_vel_bag_runner
