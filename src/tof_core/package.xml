@@ -17,6 +17,7 @@
   <exec_depend>foxglove_bridge</exec_depend>
   <exec_depend>irc_table</exec_depend>
   <exec_depend>tof_sim</exec_depend>
+  <exec_depend>tof_util</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>nav_msgs</exec_depend>
   <exec_depend>rclpy</exec_depend>

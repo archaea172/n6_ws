@@ -102,6 +102,13 @@ def generate_launch_description():
         output='screen',
     )
 
+    cmd_vel_publisher = Node(
+        package='tof_util',
+        executable='cmd_vel_publisher.py',
+        name='cmd_vel_publisher',
+        output='screen',
+    )
+
     foxglove_bridge = Node(
         package='foxglove_bridge',
         executable='foxglove_bridge',
@@ -190,6 +197,7 @@ def generate_launch_description():
         bridge,
         robot_state_publisher,
         tof_frame_republisher,
+        cmd_vel_publisher,
         foxglove_bridge,
         spawn_robot,
     ])
