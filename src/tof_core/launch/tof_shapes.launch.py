@@ -102,6 +102,16 @@ def generate_launch_description():
         output='screen',
     )
 
+    irc_table_marker_publisher = Node(
+        package='tof_core',
+        executable='irc_table_marker_publisher.py',
+        name='irc_table_marker_publisher',
+        parameters=[{
+            'use_sim_time': True,
+        }],
+        output='screen',
+    )
+
     cmd_vel_publisher = Node(
         package='tof_util',
         executable='cmd_vel_publisher.py',
@@ -197,6 +207,7 @@ def generate_launch_description():
         bridge,
         robot_state_publisher,
         tof_frame_republisher,
+        irc_table_marker_publisher,
         cmd_vel_publisher,
         foxglove_bridge,
         spawn_robot,

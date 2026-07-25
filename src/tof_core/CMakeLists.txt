@@ -17,7 +17,9 @@ install(
 )
 
 install(
-  PROGRAMS scripts/tof_frame_republisher.py
+  PROGRAMS
+    scripts/irc_table_marker_publisher.py
+    scripts/tof_frame_republisher.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
