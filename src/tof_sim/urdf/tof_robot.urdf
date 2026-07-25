@@ -32,7 +32,7 @@
     <visual>
       <origin xyz="0 0 0.06" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.18" length="0.12"/>
+        <cylinder radius="0.09" length="0.12"/>
       </geometry>
       <material name="base_dark"/>
     </visual>
@@ -40,7 +40,7 @@
     <collision>
       <origin xyz="0 0 0.06" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.18" length="0.12"/>
+        <cylinder radius="0.09" length="0.12"/>
       </geometry>
     </collision>
   </link>
@@ -78,7 +78,7 @@
   <joint name="tof_sensor_joint" type="fixed">
     <parent link="base_link"/>
     <child link="tof_sensor_link"/>
-    <origin xyz="0.17 0 0.14" rpy="0 0.261799 0"/>
+    <origin xyz="0.085 0 0.14" rpy="0 0.261799 0"/>
   </joint>
 
   <gazebo reference="base_link">

@@ -166,7 +166,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             'initial_x',
-            default_value='0.25',
+            default_value='-0.25',
             description='Initial robot X position.',
         ),
         DeclareLaunchArgument(
